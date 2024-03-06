@@ -1,5 +1,5 @@
 import Header from "./layout/Header";
-import SideMenu from "./layout/Columns";
+import Columns from "./layout/Columns";
 import PlotterChart from "./PlotterChart";
 
 const MainLayout = () => {
@@ -8,7 +8,7 @@ const MainLayout = () => {
       <Header />
       <div className="flex flex-row">
         <div className="w-[25%]">
-          <SideMenu />
+          <Columns />
         </div>
         <div>
           <PlotterChart />
