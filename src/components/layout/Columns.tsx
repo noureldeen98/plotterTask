@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Column } from "../utils/models/column";
 import Draggable from "react-draggable";
 import NotificationComponent from "../sharedComponents/ErrorNotification";
+import DraggableComponent from "../chartComponents/DraggableComponent";
+import DroppableArea from "../chartComponents/DroppableArea";
 
 const Columns = () => {
   const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/columns";
@@ -15,23 +17,24 @@ const Columns = () => {
   });
   //Side effect : Getting the columns
   useEffect(() => {
-    const fetchingColumns= async()=>{
+    const fetchingColumns = async () => {
       await axios
-      .get(`${baseURL}`)
-      .then((response: AxiosResponse) => {
-        setColumns(response.data.columns);
-      })
-      .catch((error: AxiosError) => {
-        setShowNotification(true);
-        setNotificationData({
-          type: "error",
-          message: `${error.message}`,
-          description: `Something went wrong! ... Please check your internet connection!`,
+        .get(`${baseURL}`)
+        .then((response: AxiosResponse) => {
+          setColumns(response.data.columns);
+        })
+        .catch((error: AxiosError) => {
+          setShowNotification(true);
+          setNotificationData({
+            type: "error",
+            message: `${error.message}`,
+            description: `Something went wrong! ... Please check your internet connection!`,
+          });
         });
-      });
-    }  
+    };
     fetchingColumns();
   }, []);
+
   return (
     <>
       {showNotification && (
@@ -42,12 +45,25 @@ const Columns = () => {
         <hr className="border-[2px] border-[lightGray]" />
         <ul className="gap-4 flex flex-col items-start mt-4">
           {columns.map((column: Column) => (
-            <Draggable>
-              <li>{column.name}</li>
-            </Draggable>
+            // <Draggable
+            //   axis="both"
+            //   defaultPosition={{ x: 0, y: 0 }}
+            //   // position={null}
+            //   grid={[25, 25]}
+            //   scale={1}
+            //   // onStart={handleStart}
+            //   // onDrag={handleDrag}
+            //   // onStop={handleStop}
+            // >
+              // <li style={{ position: "relative" }}>{column.name}</li>
+              <DraggableComponent key={column.name} columnData={column} />
+          
+            // </Draggable>
           ))}
         </ul>
       </div>
+
+      <DroppableArea />
     </>
   );
 };

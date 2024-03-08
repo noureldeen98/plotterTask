@@ -1,10 +1,9 @@
 import React from 'react'
+import BoxCharts from './DroppableArea'
 
 const PlotterChart = () => {
   return (
-    <div>
-      
-    </div>
+      <BoxCharts />
   )
 }
 
