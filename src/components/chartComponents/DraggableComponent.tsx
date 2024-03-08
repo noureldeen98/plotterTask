@@ -1,21 +1,63 @@
-import React from 'react';
-import Draggable from 'react-draggable';
-import { useDispatch } from 'react-redux';
-import { handleDrop } from '../state/slices/DragandDropSlice';
+import React, { useEffect, useRef, useState } from "react";
+import Draggable from "react-draggable";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleDraggingItem,
+  handleDropInDimension,
+  handleDropInMeasure,
+} from "../state/slices/DragandDropSlice";
 
 const DraggableComponent = ({ columnData }) => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [item, setitemType] = useState({});
+  const dimesnsionElement = useSelector(
+    (state) => state.dragAndDropSlice.droppedDimensionItem
+  );
   const handleDragStop = (event, data) => {
-    // Handle drag stop event here if needed
-    dispatch(handleDrop(data))
-    console.log('Drag stopped at:', data.x, data.y);
+    const { clientX, clientY } = event;
+    if (item.function === "dimension") {
+      const droppableDimensionArea = document.getElementById(
+        "droppable-dimension-area"
+      );
+      const rectDimension = droppableDimensionArea?.getBoundingClientRect();
+      if (
+        clientX >= rectDimension.left &&
+        clientX <= rectDimension.right &&
+        clientY >= rectDimension.top &&
+        clientY <= rectDimension.bottom
+      ) {
+        if (dimesnsionElement === undefined) {
+          dispatch(handleDropInDimension(columnData));
+        } else {
+          //ToDo show a message to inform the user by using by one dimension
+        }
+      }
+    } else {
+      const droppableMeasureArea = document.getElementById(
+        "droppable-measure-area"
+      );
+      const rect = droppableMeasureArea?.getBoundingClientRect();
+      if (
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom
+      ) {
+        dispatch(handleDropInMeasure(columnData));
+      }
+    }
+  };
+
+  const handleStart = () => {
+    setitemType(columnData);
+    dispatch(handleDraggingItem(columnData));
   };
 
   return (
-    <Draggable onStop={handleDragStop}>
-      <div style={{ cursor: 'move', padding: '8px', border: '1px solid #ccc' }}>
+    <Draggable onStop={handleDragStop} onStart={handleStart}>
+      <li style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}>
         {columnData.name}
-      </div>
+      </li>
     </Draggable>
   );
 };

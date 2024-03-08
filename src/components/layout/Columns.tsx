@@ -45,25 +45,10 @@ const Columns = () => {
         <hr className="border-[2px] border-[lightGray]" />
         <ul className="gap-4 flex flex-col items-start mt-4">
           {columns.map((column: Column) => (
-            // <Draggable
-            //   axis="both"
-            //   defaultPosition={{ x: 0, y: 0 }}
-            //   // position={null}
-            //   grid={[25, 25]}
-            //   scale={1}
-            //   // onStart={handleStart}
-            //   // onDrag={handleDrag}
-            //   // onStop={handleStop}
-            // >
-              // <li style={{ position: "relative" }}>{column.name}</li>
               <DraggableComponent key={column.name} columnData={column} />
-          
-            // </Draggable>
           ))}
         </ul>
       </div>
-
-      <DroppableArea />
     </>
   );
 };

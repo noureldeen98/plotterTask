@@ -1,30 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {droppedItems:[{}],draggedItemData:{} };
+const initialState = {
+  droppedDimensionItem: undefined,
+  droppedMeasureItems: [],
+  draggedItemData: {},
+  dimensionCanBeDragged: true,
+};
 const dragAndDropSlice = createSlice({
   name: "dragAndDropSlice",
   initialState,
   reducers: {
-    handleDrop: (state, action) => {
-      // Check if the dropped position is within the droppable area
-      state.droppedItems.push(action.payload)
-      const droppableArea = document.getElementById("droppable-area");
-      const rect = droppableArea?.getBoundingClientRect();
-      if (
-        action.payload.x >= rect.left &&
-        action.payload.x <= rect.right &&
-        action.payload.y >= rect.top &&
-        action.payload.y <= rect.bottom
-      ) {
-        // Item dropped inside the droppable area
-        // setDroppedItems((prevItems) => [...prevItems, { id, position }]);
-      }
+    handleDropInDimension: (state, action) => {
+      state.droppedDimensionItem = action.payload;
     },
-    handleDraggingItem:(state,action)=>{
-      state.draggedItemData = action.payload
-    }
+    handleDropInMeasure: (state, action) => {
+      state.droppedMeasureItems = [
+        ...state.droppedMeasureItems,
+        action.payload,
+      ];
+    },
+    handleDraggingItem: (state, action) => {
+      state.draggedItemData = action.payload;
+    },
   },
 });
 
-export const { handleDrop,handleDraggingItem } = dragAndDropSlice.actions;
+export const {
+  handleDropInDimension,
+  handleDropInMeasure,
+  handleDraggingItem,
+} = dragAndDropSlice.actions;
 export default dragAndDropSlice.reducer;

@@ -1,64 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 const DroppableArea = () => {
-  const droppedItems = useSelector(
-    (state) => state.dragAndDropSlice.droppedItems
+  const measureAreaRef = useRef(undefined);
+  const dimensionAreaRef = useRef(undefined);
+  const dimesnsionElement = useSelector(
+    (state) => state.dragAndDropSlice.droppedDimensionItem
+  );
+  const measuresArray = useSelector(
+    (state) => state.dragAndDropSlice.droppedMeasureItems
   );
   useEffect(() => {
-    console.log("sta", droppedItems);
-  }, [droppedItems]);
-  return (
-    <div
-      id="droppable-area"
-      // style={{
-      //   border: "2px dashed #000",
-      //   minHeight: "200px",
-      //   position: "relative",
-      // }}
-    >
-      <p>Droppable Area</p>
-      {/* {droppedItems?droppedItems.map((item) => ( 
-         <div
-          key={item.name}
-          style={{
-            position: "absolute",
-            backgroundColor: "red",
-            border:"1px solid green",
-            top:item.x,
-            left:item.y
-          }}
-        > 
-          {item.name}
-        </div>
-       )):""
-      }
-    </div> */}
+    if (dimesnsionElement !== undefined && measuresArray.length !==0) {
+       //Calling the endpoint to det data
+    } else {
+      //ToDO Show notification to inform user by using both dimension and measure values 
+    }
+  }, [dimesnsionElement, measuresArray]);
 
+  useEffect(() => {}, []);
+
+  return (
+    <div>
       <div className="flex flex-col gap-2 justify-center">
         <div className="flex flex-row gap-2">
           <label>Dimensions</label>
-
-          <div className="border-solid w-[100px] h-[200px] border-black border-2"></div>
+          <div
+            ref={dimensionAreaRef}
+            className="border-solid w-[500px] h-[100px] border-black border-2"
+            id="droppable-dimension-area"
+          ></div>
           <button>Clear</button>
         </div>
-        {/* 
-      <div className="flex flex-row gap-2">
-        <label>Measures</label>
-        {draggedMeasures.map((measure, index) => (
-          <div key={index} className="border-solid border-black border-2">
-            {measure}
-          </div>
-        ))}
-        <button >Clear</button>
-      </div> */}
 
-        {/* Draggable input elements */}
         <div className="flex flex-row gap-2">
-          {/* <DraggableInput label="Input 1" />
-        <DraggableInput label="Input 2" /> */}
-          {/* Add more draggable inputs as needed */}
+          <label>Measures</label>
+          <div
+            ref={measureAreaRef}
+            className="border-solid w-[500px] h-[100px] border-black border-2"
+            id="droppable-measure-area"
+          >
+            {/* <ul className="flex flex-row gap-2">
+              {measuresArray
+                ? measuresArray.map((measure) => (
+                    <li key={measure.name}>{measure.name}</li>
+                  ))
+                : ""}
+            </ul> */}
+          </div>
         </div>
+        <button>Clear</button>
       </div>
     </div>
   );
