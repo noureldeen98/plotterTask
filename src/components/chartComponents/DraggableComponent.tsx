@@ -7,6 +7,7 @@ import {
   handleDropInMeasure,
 } from "../state/slices/DragandDropSlice";
 import { Column } from "../utils/models/column";
+import WarningMessage from "../sharedComponents/WarningMessage";
 
 const DraggableComponent: React.FC<{ columnData: Column }> = ({
   columnData,
@@ -14,6 +15,8 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
   const dispatch = useDispatch();
   const liRef = useRef(undefined);
   const [item, setItemType] = useState<Column>({ name: "", function: "" });
+  const [showWarningMessage,setShowWarningMessage] = useState(false)
+  const [warningMessage,setWarningMessage] = useState("")
   const dimesnsionElement = useSelector(
     (state) => state.dragAndDropSlice.droppedDimensionItem
   );
@@ -34,16 +37,20 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
         ) {
           if (dimesnsionElement === undefined) {
             dispatch(handleDropInDimension(columnData));
-          } else {
-            //ToDo show a message to inform the user by using by one dimension
-          }
+          }else{
+          setShowWarningMessage(true)
+          setWarningMessage("Please, don't use more than 1 dimension value")
+          } 
+        }else {
+          setShowWarningMessage(true)
+          setWarningMessage("Please, drag it in its dimension field!")
+
         }
       }
     } else {
       const droppableMeasureArea = document.getElementById(
         "droppable-measure-area"
       );
-
       const rect = droppableMeasureArea?.getBoundingClientRect();
       if (rect) {
         if (
@@ -53,6 +60,10 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
           clientY <= rect.bottom
         ) {
           dispatch(handleDropInMeasure(columnData));
+        }else{
+          setShowWarningMessage(true)
+          setWarningMessage("Please, drag it in its measure field!")
+         
         }
       }
     }
@@ -69,6 +80,8 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
   };
 
   return (
+    <>
+    {showWarningMessage && <WarningMessage messages={warningMessage}/>}
     <Draggable onStop={handleDragStop} onStart={handleStart}>
       <li
         ref={liRef}
@@ -77,6 +90,7 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
         {columnData.name}
       </li>
     </Draggable>
+    </>
   );
 };
 

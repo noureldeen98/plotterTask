@@ -1,5 +1,7 @@
+export type NotificationType = "success" | "info" | "warning" | "error";
+
 export interface NotificationData{
-   type:string;
+   type:NotificationType;
    message:string;
    description:string;
 }

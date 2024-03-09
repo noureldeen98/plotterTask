@@ -11,6 +11,7 @@ import NotificationComponent from "../sharedComponents/ErrorNotification";
 import Loader from "../sharedComponents/loader/Loader";
 
 const DroppableArea = () => {
+  const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/data";
   const dispatch = useDispatch();
   const [chartData, setChartData] = useState([{ name: "", values: [] }]);
   const [showNotification, setShowNotification] = useState(false);
@@ -20,7 +21,6 @@ const DroppableArea = () => {
     message: "",
     description: "",
   });
-  const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/data";
   const measureAreaRef = useRef(undefined);
   const dimensionAreaRef = useRef(undefined);
   const dimesnsionElement = useSelector(
@@ -29,9 +29,27 @@ const DroppableArea = () => {
   const measuresArray = useSelector(
     (state) => state.dragAndDropSlice.droppedMeasureItems
   );
+
+  const fetchingData = async (bodyRequest) => {
+    setShowSpinner(true);
+    await axios
+      .post(baseURL, bodyRequest)
+      .then((response: AxiosResponse) => {
+        setChartData(response.data.data);
+      })
+      .catch((error: AxiosError) => {
+        setShowNotification(true);
+        setNotificationData({
+          type: "error",
+          message: `${error.message}`,
+          description: `Something went wrong! ... Please check your internet connection!`,
+        });
+      })
+      .finally(() => setShowSpinner(false));
+  };
+
   useEffect(() => {
     if (dimesnsionElement !== undefined && measuresArray.length !== 0) {
-      setShowSpinner(true)
       //Calling the endpoint to det data
       const measures = measuresArray.map((item: Column) => item.name);
       const dimension = dimesnsionElement.name;
@@ -39,24 +57,7 @@ const DroppableArea = () => {
         measures,
         dimension,
       };
-      const fetchingData = async () => {
-        await axios
-          .post(baseURL, bodyRequest)
-          .then((response: AxiosResponse) => {
-            setChartData(response.data.data);
-            setShowSpinner(false)
-          })
-          .catch((error: AxiosError) => {
-            setShowNotification(true);
-            setShowSpinner(false);
-            setNotificationData({
-              type: "error",
-              message: `${error.message}`,
-              description: `Something went wrong! ... Please check your internet connection!`,
-            });
-          });
-      };
-      fetchingData();
+      fetchingData(bodyRequest);
     }
   }, [dimesnsionElement, measuresArray]);
 
@@ -74,9 +75,7 @@ const DroppableArea = () => {
       {showNotification && (
         <NotificationComponent notificationData={notificationData} />
       )}
-      {showSpinner && (
-        <Loader />
-      )}
+      {showSpinner && <Loader />}
       <div className="flex flex-col gap-2 justify-center items-center">
         <div className="flex flex-row gap-2 items-center justify-between">
           <label>Dimensions</label>

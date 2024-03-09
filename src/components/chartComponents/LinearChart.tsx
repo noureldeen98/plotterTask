@@ -12,6 +12,9 @@ const LineChart = ({ chartOptions }) => {
           .map((option: ChartDataResponse) => option.values) || []; // measure
 
   const options = {
+    title: {
+      text: 'Line Chart Example',
+    },
     tooltip: {
       trigger: "axis",
     },

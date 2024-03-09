@@ -15,6 +15,7 @@ const Columns = () => {
     message: "",
     description: "",
   });
+
   //Side effect : Getting the columns
   useEffect(() => {
     setShowSpinner(true);
@@ -23,17 +24,17 @@ const Columns = () => {
         .get(`${baseURL}`)
         .then((response: AxiosResponse) => {
           setColumns(response.data.columns);
-          setShowSpinner(false);
         })
         .catch((error: AxiosError) => {
-          setShowSpinner(false);
           setShowNotification(true);
           setNotificationData({
             type: "error",
             message: `${error.message}`,
             description: `Something went wrong! ... Please check your internet connection!`,
           });
-        });
+        })
+      .finally(() => setShowSpinner(false));
+
     };
     fetchingColumns();
   }, []);
@@ -50,7 +51,7 @@ const Columns = () => {
         <ul className="gap-4 flex flex-col items-start mt-4">
           {columns.map((column: Column) => (
             <DraggableComponent key={column.name} columnData={column} />
-          ))}
+          )) }
         </ul>
       </div>
     </>
