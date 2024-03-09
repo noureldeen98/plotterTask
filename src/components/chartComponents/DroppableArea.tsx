@@ -1,11 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Column } from "../utils/models/column";
-import LinearChart from "./LinearChart";
 import LineChart from "./LinearChart";
+import { handleClearDimension } from "../state/slices/DragandDropSlice";
+
 
 const DroppableArea = () => {
+  const dispatch = useDispatch()
   const [chartData, setChartData] = useState([{ name: "", values: [] }]);
   const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/data";
   const measureAreaRef = useRef(undefined);
@@ -41,7 +43,10 @@ const DroppableArea = () => {
     }
   }, [dimesnsionElement, measuresArray]);
 
-  useEffect(() => {}, []);
+  //Clearing the Dimension field
+  const handleDimensionClear = ()=>{
+    dispatch(handleClearDimension())
+  }
 
   return (
     <>
@@ -54,7 +59,7 @@ const DroppableArea = () => {
               className="border-solid w-[500px] h-[100px] border-black border-2"
               id="droppable-dimension-area"
             ></div>
-            <button>Clear</button>
+            <button onClick={handleDimensionClear}>Clear</button>
           </div>
 
           <div className="flex flex-row gap-2">
@@ -84,3 +89,5 @@ const DroppableArea = () => {
 };
 
 export default DroppableArea;
+
+

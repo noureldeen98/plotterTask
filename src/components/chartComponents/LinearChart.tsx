@@ -36,10 +36,10 @@ const LineChart = ({ chartOptions }) => {
           chartOptions.length == 2
             ? chartOptions[1]?.values
             : chartOptions.slice(1).map((value, index) => ({
-              value: value || null, // Handle missing data
-              name: xAxisData[index],
-            })) || [], // Assuming chartOptions[2] contains the actual line chart data
-        type: "line",    
+                value: value || null, // Handle missing data
+                name: xAxisData[index],
+              })) || [], // Assuming chartOptions[2] contains the actual line chart data
+        type: "line",
       },
     ],
   };

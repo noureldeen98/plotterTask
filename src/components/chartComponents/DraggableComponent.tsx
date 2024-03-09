@@ -9,7 +9,8 @@ import {
 
 const DraggableComponent = ({ columnData }) => {
   const dispatch = useDispatch();
-  const [item, setitemType] = useState({});
+  const liRef= useRef(undefined)
+  const [item, setItemType] = useState({});
   const dimesnsionElement = useSelector(
     (state) => state.dragAndDropSlice.droppedDimensionItem
   );
@@ -49,13 +50,18 @@ const DraggableComponent = ({ columnData }) => {
   };
 
   const handleStart = () => {
-    setitemType(columnData);
-    dispatch(handleDraggingItem(columnData));
+    setItemType(columnData);
+    const allTheColumndata = {
+      ...columnData,
+      positionTop:liRef?.current?.getBoundingClientRect().top,
+      positionLeft:liRef?.current?.getBoundingClientRect().left,
+    }
+    dispatch(handleDraggingItem(allTheColumndata))
   };
 
   return (
     <Draggable onStop={handleDragStop} onStart={handleStart}>
-      <li style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}>
+      <li ref={liRef} style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}>
         {columnData.name}
       </li>
     </Draggable>
