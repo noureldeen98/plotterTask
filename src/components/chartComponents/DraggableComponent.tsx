@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,45 +8,52 @@ import {
 } from "../state/slices/DragandDropSlice";
 import { Column } from "../utils/models/column";
 
-const DraggableComponent = ({ columnData }:Column) => {
+const DraggableComponent: React.FC<{ columnData: Column }> = ({
+  columnData,
+}) => {
   const dispatch = useDispatch();
   const liRef = useRef(undefined);
-  const [item, setItemType] = useState({});
+  const [item, setItemType] = useState<Column>({ name: "", function: "" });
   const dimesnsionElement = useSelector(
     (state) => state.dragAndDropSlice.droppedDimensionItem
   );
 
-  const handleDragStop = (event, data) => {
+  const handleDragStop = (event: React.DragEvent, data) => {
     const { clientX, clientY } = event;
     if (item.function === "dimension") {
       const droppableDimensionArea = document.getElementById(
         "droppable-dimension-area"
       );
       const rectDimension = droppableDimensionArea?.getBoundingClientRect();
-      if (
-        clientX >= rectDimension.left &&
-        clientX <= rectDimension.right &&
-        clientY >= rectDimension.top &&
-        clientY <= rectDimension.bottom
-      ) {
-        if (dimesnsionElement === undefined) {
-          dispatch(handleDropInDimension(columnData));
-        } else {
-          //ToDo show a message to inform the user by using by one dimension
+      if (rectDimension) {
+        if (
+          clientX >= rectDimension.left &&
+          clientX <= rectDimension.right &&
+          clientY >= rectDimension.top &&
+          clientY <= rectDimension.bottom
+        ) {
+          if (dimesnsionElement === undefined) {
+            dispatch(handleDropInDimension(columnData));
+          } else {
+            //ToDo show a message to inform the user by using by one dimension
+          }
         }
       }
     } else {
       const droppableMeasureArea = document.getElementById(
         "droppable-measure-area"
       );
+
       const rect = droppableMeasureArea?.getBoundingClientRect();
-      if (
-        clientX >= rect.left &&
-        clientX <= rect.right &&
-        clientY >= rect.top &&
-        clientY <= rect.bottom
-      ) {
-        dispatch(handleDropInMeasure(columnData));
+      if (rect) {
+        if (
+          clientX >= rect.left &&
+          clientX <= rect.right &&
+          clientY >= rect.top &&
+          clientY <= rect.bottom
+        ) {
+          dispatch(handleDropInMeasure(columnData));
+        }
       }
     }
   };

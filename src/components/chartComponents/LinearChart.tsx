@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
 import ReactECharts from "echarts-for-react";
+import { ChartDataResponse } from "../utils/models/chartDataResponse";
 
 const LineChart = ({ chartOptions }) => {
-  useEffect(() => {
-    console.log(chartOptions[2]?.values);
-  }, [chartOptions]);
 
   const xAxisData = chartOptions[0]?.values || []; // dimension // X-axis
   const yAxisData =
     chartOptions.length == 2
       ? chartOptions[1]?.values
-      : chartOptions.slice(1).map((option) => option.values) || []; // measure
+      : chartOptions
+          .slice(1)
+          .map((option: ChartDataResponse) => option.values) || []; // measure
 
   const options = {
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
     },
     grid: {
       left: "10%", // Adjust as needed
