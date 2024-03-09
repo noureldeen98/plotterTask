@@ -17,6 +17,9 @@ const NotificationComponent = ({notificationData}) => {
     if(notificationData.type==='error'){
         openNotificationWithIcon(notificationData.type)
     }
+    if(notificationData.type==='warning'){
+        openNotificationWithIcon(notificationData.type)
+    }
   },[])
 
   return (

@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { Column } from "../utils/models/column";
 import NotificationComponent from "../sharedComponents/ErrorNotification";
 import DraggableComponent from "../chartComponents/DraggableComponent";
+import Loader from "../sharedComponents/loader/Loader";
 
 const Columns = () => {
   const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/columns";
   const [columns, setColumns] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [notificationData, setNotificationData] = useState({
     type: "",
     message: "",
@@ -15,13 +17,16 @@ const Columns = () => {
   });
   //Side effect : Getting the columns
   useEffect(() => {
+    setShowSpinner(true);
     const fetchingColumns = async () => {
       await axios
         .get(`${baseURL}`)
         .then((response: AxiosResponse) => {
           setColumns(response.data.columns);
+          setShowSpinner(false);
         })
         .catch((error: AxiosError) => {
+          setShowSpinner(false);
           setShowNotification(true);
           setNotificationData({
             type: "error",
@@ -38,12 +43,13 @@ const Columns = () => {
       {showNotification && (
         <NotificationComponent notificationData={notificationData} />
       )}
+      {showSpinner && <Loader />}
       <div className="w-[100%] text-start h-[690px]">
         <p className="mt-5">Columns</p>
         <hr className="border-[2px] border-[lightGray]" />
         <ul className="gap-4 flex flex-col items-start mt-4">
           {columns.map((column: Column) => (
-              <DraggableComponent key={column.name} columnData={column} />
+            <DraggableComponent key={column.name} columnData={column} />
           ))}
         </ul>
       </div>

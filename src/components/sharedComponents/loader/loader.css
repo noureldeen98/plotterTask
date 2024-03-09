@@ -1,0 +1,17 @@
+.overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2); /* Adjust the overlay color and transparency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .spinner-container {
+    position: relative;
+    z-index: 1; /* Ensure the spinner is on top of the overlay */
+  }
+  
