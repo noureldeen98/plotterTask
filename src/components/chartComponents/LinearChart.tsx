@@ -52,7 +52,7 @@ const LineChart = ({ chartOptions }) => {
   return (
     <ReactECharts
       option={options}
-      style={{ height: "600px", width: "100%" }}
+      style={{ height: "600px", width: "100%",marginLeft:"60px",marginTop:"30px"}}
       opts={{ renderer: "svg" }}
     />
   );

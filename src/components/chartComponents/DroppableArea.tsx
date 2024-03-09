@@ -76,7 +76,7 @@ const DroppableArea = () => {
         <NotificationComponent notificationData={notificationData} />
       )}
       {showSpinner && <Loader />}
-      <div className="flex flex-col gap-2 justify-center items-center">
+      <div className="flex flex-col gap-2 justify-start items-center mt-5">
         <div className="flex flex-row gap-2 items-center justify-between">
           <label>Dimensions</label>
           <div

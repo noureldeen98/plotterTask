@@ -45,10 +45,10 @@ const Columns = () => {
         <NotificationComponent notificationData={notificationData} />
       )}
       {showSpinner && <Loader />}
-      <div className="w-[100%] text-start h-[690px]">
-        <p className="mt-5">Columns</p>
+      <div className="w-[100%] text-start h-[690px] border-2 border-black border-solid">
+        <p className="pt-4 pl-2 text-lg font-bold">Columns</p>
         <hr className="border-[2px] border-[lightGray]" />
-        <ul className="gap-4 flex flex-col items-start mt-4">
+        <ul className="gap-4 flex flex-col items-start mt-4 pl-2">
           {columns.map((column: Column) => (
             <DraggableComponent key={column.name} columnData={column} />
           )) }

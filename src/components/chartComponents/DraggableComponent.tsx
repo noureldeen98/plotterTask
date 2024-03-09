@@ -85,7 +85,7 @@ const DraggableComponent: React.FC<{ columnData: Column }> = ({
     <Draggable onStop={handleDragStop} onStart={handleStart}>
       <li
         ref={liRef}
-        style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}
+        style={{ cursor: "move", padding: "3px", }}
       >
         {columnData.name}
       </li>
