@@ -6,8 +6,9 @@ import {
   handleDropInDimension,
   handleDropInMeasure,
 } from "../state/slices/DragandDropSlice";
+import { Column } from "../utils/models/column";
 
-const DraggableComponent = ({ columnData }) => {
+const DraggableComponent = ({ columnData }:Column) => {
   const dispatch = useDispatch();
   const liRef = useRef(undefined);
   const [item, setItemType] = useState({});

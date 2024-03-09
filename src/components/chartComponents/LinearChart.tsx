@@ -30,7 +30,7 @@ const LineChart = ({ chartOptions }) => {
       },
     },
     yAxis: {
-      type: "category",
+      type: "value",
       data: yAxisData,
     },
     series: [

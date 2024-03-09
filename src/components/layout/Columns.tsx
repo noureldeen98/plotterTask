@@ -1,10 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Column } from "../utils/models/column";
-import Draggable from "react-draggable";
 import NotificationComponent from "../sharedComponents/ErrorNotification";
 import DraggableComponent from "../chartComponents/DraggableComponent";
-import DroppableArea from "../chartComponents/DroppableArea";
 
 const Columns = () => {
   const baseURL = "https://plotter-task-8019e13a60ac.herokuapp.com/columns";
