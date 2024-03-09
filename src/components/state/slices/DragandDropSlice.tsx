@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   droppedDimensionItem: undefined,
   droppedMeasureItems: [],
-  draggedItemData: {positionTop:0.0,positionLeft:0.0},
+  draggedItemData: {},
   dimensionCanBeDragged: true,
 };
 const dragAndDropSlice = createSlice({
