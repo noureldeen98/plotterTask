@@ -13,6 +13,9 @@ const LineChart = ({ chartOptions }) => {
       : chartOptions.slice(1).map((option) => option.values) || []; // measure
 
   const options = {
+    tooltip: {
+      trigger: 'axis',
+    },
     grid: {
       left: "10%", // Adjust as needed
       right: "10%", // Adjust as needed
