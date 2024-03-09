@@ -84,7 +84,7 @@ const DroppableArea = () => {
             className="border-solid w-[500px] h-[50px] border-black border-2"
             id="droppable-dimension-area"
           ></div>
-          <button onClick={handleDimensionClear}>Clear</button>
+          <button className="border-2 border-black border-solid rounded-md w-16" onClick={handleDimensionClear}>Clear</button>
         </div>
         <div className="flex flex-row gap-2 items-center justify-between">
           <label className="pr-3">Measures</label>
@@ -93,7 +93,7 @@ const DroppableArea = () => {
             className="border-solid w-[500px] h-[50px] border-black border-2"
             id="droppable-measure-area"
           ></div>
-          <button onClick={handleMesuresClear}>Clear</button>
+          <button className="border-2 border-black border-solid rounded-md w-16" onClick={handleMesuresClear}>Clear</button>
         </div>
       </div>
       {chartData[0].name !== "" && (
