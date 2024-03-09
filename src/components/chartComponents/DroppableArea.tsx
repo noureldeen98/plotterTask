@@ -69,13 +69,6 @@ const DroppableArea = () => {
               className="border-solid w-[500px] h-[100px] border-black border-2"
               id="droppable-measure-area"
             >
-              {/* <ul className="flex flex-row gap-2">
-              {measuresArray
-                ? measuresArray.map((measure) => (
-                    <li key={measure.name}>{measure.name}</li>
-                  ))
-                : ""}
-            </ul> */}
             </div>
           </div>
           <button>Clear</button>
