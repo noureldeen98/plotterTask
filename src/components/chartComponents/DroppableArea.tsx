@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Column } from "../utils/models/column";
 import LineChart from "./LinearChart";
-import { handleClearDimension } from "../state/slices/DragandDropSlice";
+import { handleClearDimension, handleClearMesures } from "../state/slices/DragandDropSlice";
 
 const DroppableArea = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,11 @@ const DroppableArea = () => {
 
   //Clearing the Dimension field
   const handleDimensionClear = () => {
-    dispatch(handleClearDimension());
+    dispatch(handleClearDimension({positionLeft:0,positionTop:0}));
+  };
+  //Clearing the Measure field
+  const handleMesuresClear = () => {
+    dispatch(handleClearMesures({positionLeft:0,positionTop:0}));
   };
 
   return (
@@ -66,7 +70,7 @@ const DroppableArea = () => {
             className="border-solid w-[500px] h-[50px] border-black border-2"
             id="droppable-measure-area"
           ></div>
-          <button>Clear</button>
+          <button onClick={handleMesuresClear}>Clear</button>
         </div>
       </div>
       {chartData[0].name !== "" && (

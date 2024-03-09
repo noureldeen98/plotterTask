@@ -20,12 +20,17 @@ const dragAndDropSlice = createSlice({
       ];
     },
     handleDraggingItem: (state, action) => {
-      console.log(action.payload);
       state.draggedItemData = action.payload;
     },
-    handleClearDimension: (state) => {
-      window.location.reload()
+    handleClearDimension: (state, action) => {
+      window.location.reload();
+      state.draggedItemData = { ...state.draggedItemData, ...action.payload };
       state.droppedDimensionItem = undefined;
+    },
+    handleClearMesures: (state, action) => {
+      window.location.reload();
+      state.draggedItemData = { ...state.draggedItemData, ...action.payload };
+      state.droppedMeasureItems = [];
     },
   },
 });
@@ -35,5 +40,6 @@ export const {
   handleDropInMeasure,
   handleDraggingItem,
   handleClearDimension,
+  handleClearMesures,
 } = dragAndDropSlice.actions;
 export default dragAndDropSlice.reducer;

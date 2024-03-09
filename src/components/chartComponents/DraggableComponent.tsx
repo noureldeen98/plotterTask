@@ -9,11 +9,12 @@ import {
 
 const DraggableComponent = ({ columnData }) => {
   const dispatch = useDispatch();
-  const liRef= useRef(undefined)
+  const liRef = useRef(undefined);
   const [item, setItemType] = useState({});
   const dimesnsionElement = useSelector(
     (state) => state.dragAndDropSlice.droppedDimensionItem
   );
+
   const handleDragStop = (event, data) => {
     const { clientX, clientY } = event;
     if (item.function === "dimension") {
@@ -53,15 +54,18 @@ const DraggableComponent = ({ columnData }) => {
     setItemType(columnData);
     const allTheColumndata = {
       ...columnData,
-      positionTop:liRef?.current?.getBoundingClientRect().top,
-      positionLeft:liRef?.current?.getBoundingClientRect().left,
-    }
-    dispatch(handleDraggingItem(allTheColumndata))
+      positionTop: liRef?.current?.getBoundingClientRect().top,
+      positionLeft: liRef?.current?.getBoundingClientRect().left,
+    };
+    dispatch(handleDraggingItem(allTheColumndata));
   };
 
   return (
     <Draggable onStop={handleDragStop} onStart={handleStart}>
-      <li ref={liRef} style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}>
+      <li
+        ref={liRef}
+        style={{ cursor: "move", padding: "8px", border: "1px solid #ccc" }}
+      >
         {columnData.name}
       </li>
     </Draggable>
